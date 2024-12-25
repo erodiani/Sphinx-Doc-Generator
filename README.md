@@ -10,6 +10,13 @@ This project is a Python-based tool designed to help you generate documentation 
 - **HTML & PDF Generation**: Based on user input, the tool can generate HTML and PDF documentation from the Sphinx project.
 - **Customization**: Customize the LaTeX output with custom front pages and document metadata (project name and author).
 
+## How to use
+
+- Put this project's folder inside your project
+- Then open it and run the Sphinx-Doc-Generator.py script
+- Answer the prompts shown on terminal
+- You have your own, already assembled, folder with the generated doc in the _build section as sphinx provides
+
 ## Requirements
 
 - Python 3.x
