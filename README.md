@@ -16,7 +16,6 @@ This project is a Python-based tool designed to help you generate documentation 
 - Sphinx
 - LaTeX (for PDF generation)
 - pdflatex (required for building the PDF version of the documentation)
-- Make (for building HTML and PDF)
 
 To install the required dependencies, run:
 
