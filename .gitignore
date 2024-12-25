@@ -1,0 +1,5 @@
+# Ignore all files and directories
+/*
+
+# Track all files in the root directory
+!/*.*
