@@ -14,6 +14,7 @@ This project is a Python-based tool designed to help you generate documentation 
 
 - Python 3.x
 - Sphinx
+- Chardet (used to automatically detect the encoding of .tex files before reading and modifying them)
 - LaTeX (for PDF generation)
 - pdflatex (required for building the PDF version of the documentation)
 
