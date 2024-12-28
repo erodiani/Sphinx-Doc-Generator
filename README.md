@@ -1,5 +1,5 @@
 # Sphinx-Doc-Generator
-# Documentation Generation Tool
+# Sphinx Documentation Generation Tool
 
 This project is a Python-based tool designed to help you generate documentation for your Python projects using Sphinx. The tool automates the process of setting up a Sphinx documentation environment and generates HTML and PDF documentation for your project.
 
