@@ -59,22 +59,27 @@ class SphinxDocGenerator():
             subprocess.run([r".\make.bat", "html"])
         if gen_pdf:
             subprocess.run([r".\make.bat", "latex"])
+
+            
             # Step 1: Add the custom code after \begin{document}
             tex_file_path = f".\\_build\\latex\\{project_name.lower()}.tex"  # Path to your .tex file
             # Step 2: Read the content of an external file
+            """
             code_file_path = "..\\front_page.tex"  # Path to the file containing the code you want to add
             with open(code_file_path, "r") as code_file:
                 code_to_insert = code_file.read()  # Read the entire content of the file
                 code_to_insert = code_to_insert.replace("Titolo della Documentazione", project_name)
                 code_to_insert = code_to_insert.replace("Autore 1, Autore 2, Autore 3", authors)
             self.add_code_after_begin_document(tex_file_path, code_to_insert)
-            # Step 3: Change to the _build/latex directory
+            """
+            # Change to the _build/latex directory
             build_latex_dir = os.path.join(os.getcwd(), "_build", "latex")
+            
             if os.path.exists(build_latex_dir):
                 os.chdir(build_latex_dir)
 
                 # Step 4: Run pdflatex on the project file
-                nome_progetto_tex = f".\\{project_name.lower()}.tex"  # Replace with actual project file name
+                nome_progetto_tex = os.path.join(".", f"{project_name.lower()}.tex")
                 nome_progetto_tex_no_ext = f"{project_name.lower()}"
 
                 path = os.getcwd()
