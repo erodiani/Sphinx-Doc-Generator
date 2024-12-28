@@ -15,7 +15,6 @@ This project is a Python-based tool designed to help you generate documentation 
 - Put this project's folder inside your project's folder with all the packages you want to generate documentation for
 - run the generate.py script:
 ```bash
-pip install -r requirements.txt
 python generate.py --path [path_where_to_find_packages] --interface [TUI, GUI]
 ```
 - Answer the prompts shown on terminal
