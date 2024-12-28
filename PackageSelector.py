@@ -1,10 +1,23 @@
 from abc import ABC, abstractmethod
+import os
 
 
 class PackageSelector(ABC):
 
     def __init__(self, path: str):
         self.path = path
+
+    def get_python_packages_from_folders(self):
+        """
+        Scansiona le cartelle nella directory specificata per pacchetti Python (cartelle con __init__.py).
+        """
+        python_packages = []
+        if os.path.exists(self.path):
+            for folder in os.listdir(self.path):
+                folder_path = os.path.join(self.path, folder)
+                if os.path.isdir(folder_path) and "__init__.py" in os.listdir(folder_path):
+                    python_packages.append(folder_path)
+        return python_packages
 
     @abstractmethod
     def run() -> list[str]:

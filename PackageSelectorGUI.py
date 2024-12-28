@@ -8,18 +8,6 @@ class PackageSelectorGUI(PackageSelector):
         super().__init__(path=path)
         self.selected_folders = []  # Lista delle cartelle selezionate
 
-    def get_python_packages_from_folders(self):
-        """
-        Scansiona le cartelle nella directory specificata per pacchetti Python (cartelle con __init__.py).
-        """
-        python_packages = []
-        if os.path.exists(self.path):
-            for folder in os.listdir(self.path):
-                folder_path = os.path.join(self.path, folder)
-                if os.path.isdir(folder_path) and "__init__.py" in os.listdir(folder_path):
-                    python_packages.append(folder_path)
-        return python_packages
-
     def toggle_selection(self, folder):
         """
         Alterna la selezione di una cartella. Se è già selezionata, la rimuove dalla lista, altrimenti la aggiunge.
@@ -65,15 +53,16 @@ class PackageSelectorGUI(PackageSelector):
         filtered = [pkg for pkg in self.python_packages if search_text in os.path.basename(pkg).lower()]
         self.update_package_list(filtered)
 
-    def documenta(self):
+    def document(self):
         """
-        Quando si preme il pulsante "Documenta", raccoglie i percorsi delle cartelle selezionate
+        Quando si preme il pulsante "document", raccoglie i percorsi delle cartelle selezionate
         e chiude la finestra.
         """
         if self.selected_folders:  # Se ci sono cartelle selezionate
             self.root.quit()  # Chiude la finestra
         else:
-            messagebox.showwarning("Selezione incompleta", "Devi selezionare almeno una cartella.")
+            messagebox.showwarning("Selezione incompleta", "Devi selezionare almeno un package.")
+            return
 
         return self.selected_folders  # Restituisce la lista di percorsi
 
@@ -101,11 +90,11 @@ class PackageSelectorGUI(PackageSelector):
         # Aggiorna la lista dei pacchetti
         self.update_package_list(self.python_packages)
 
-        # Pulsante "Documenta"
-        document_button = tk.Button(self.root, text="Documenta", command=self.documenta)
+        # Pulsante "document"
+        document_button = tk.Button(self.root, text="Document", command=self.document)
         document_button.pack(pady=20)
 
-    def run(self) -> list:
+    def run(self) -> list[str]:
         """
         Avvia l'interfaccia grafica e il loop di eventi Tkinter.
         """
@@ -123,14 +112,3 @@ class PackageSelectorGUI(PackageSelector):
 
         # Dopo la chiusura della finestra, ritorna i percorsi selezionati
         return self.selected_folders
-
-
-# Avvio dell'applicazione
-if __name__ == "__main__":
-    # Imposta la directory di base dove cercare i pacchetti (aggiusta il percorso se necessario)
-    path = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))  # Imposta il percorso
-    navigator = PackageSelectorGUI(path)
-    
-    # Ottiene le cartelle selezionate quando l'utente preme "Documenta"
-    selected_folders = navigator.run()
-    print(selected_folders)  # Stampa la lista dei percorsi delle cartelle selezionate
