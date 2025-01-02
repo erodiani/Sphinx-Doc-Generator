@@ -11,6 +11,7 @@ from PackageSelectorGUI import PackageSelectorGUI
 class SphinxDocGenerator():
     def __init__(self, path: str, interfaceType: str = ["GUI", "TUI"]):
         self.path = path
+        self.path = self.path.replace("\\", "\\\\")
         if interfaceType == "TUI":
             self.navigator = PackageSelectorTUI(path=self.path)
         if interfaceType == "GUI":

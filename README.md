@@ -23,18 +23,27 @@ python generate.py --path [path_where_to_find_packages] --interface [TUI, GUI]
 - Answer the prompts shown on terminal
 - You have your own, already assembled, folder with the generated doc in the \_build section as sphinx provides
 
-PS: Currently, documentation can only be generated for packages located directly in the root directory you provide to the command as --path argument. The ability to choose only a subpackage is not supported yet. Make sure the packages are in the correct location before running the script. The packages can be detected by this tool only if **init**.py file is inside the folder.
+PS:
+
+- Currently, documentation can only be generated for packages located directly in the root directory you provide to the command as --path argument. The ability to choose only a subpackage into a package is not supported yet.
+- Make sure the packages are in the correct location before running the script.
+- The packages can be detected by this tool only if **init**.py file is inside the folder.
+- Up to now this code was tested and used only in windows environment
 
 ## Requirements
 
-- Python 3.x
+- Python
 - Sphinx
 - Chardet (used to automatically detect the encoding of .tex files before reading and modifying them)
 - LaTeX (for PDF generation)
 - pdflatex (required for building the PDF version of the documentation)
+- tkinter (for GUI interface)
+- prompt_toolkit (for TUI interface)
 
 To install the required dependencies, run:
 
 ```bash
 pip install -r requirements.txt
 ```
+
+PS: code was developed and tested using Python 3.9.1
