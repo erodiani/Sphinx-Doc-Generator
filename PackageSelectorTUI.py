@@ -12,59 +12,59 @@ class PackageSelectorTUI(PackageSelector):
         self.current_row = 0
 
     def render_folders(self):
-        """Renderizza la lista delle cartelle e mostra la selezione."""
-        print("\033c", end="")  # Comando per pulire la console (funziona su molti terminali)
+        """Render the list of folders and show selection"""
+        print("\033c", end="")  # Clean the console
 
-        # Visualizza il messaggio continuo
-        print("Seleziona le cartelle con Enter, usa le frecce per navigare, 'q' per uscire.\n")
+        # Show continous message
+        print("Select packages with Enter, use up and down arrows to navigate, 'q' to confirm and exit.\n")
 
-        # Visualizza le cartelle con una freccia accanto a quella selezionata
+        # Show package with arrow on side of the one pointed
         for idx, folder in enumerate(self.folders):
             prefix = "->" if idx == self.current_row else "  "
             selection = "[X]" if self.selected[idx] else "[ ]"
             if idx == self.current_row:
-                print(f"{prefix} {os.path.basename(folder)} {selection}")  # Evidenzia la riga selezionata
+                print(f"{prefix} {os.path.basename(folder)} {selection}")  # Selected row
             else:
-                print(f"   {os.path.basename(folder)} {selection}")  # Righe non selezionate
+                print(f"   {os.path.basename(folder)} {selection}")  # Not selected rows
 
     def run(self) -> list[str]:
-        """Visualizza le cartelle e gestisce l'input dell'utente."""
+        """Show packages and Handle user input"""
         kb = KeyBindings()
 
-        # Gestione della freccia su
+        # Up arrow handling
         @kb.add('up')
         def up(event):
             if self.current_row > 0:
                 self.current_row -= 1
-                self.render_folders()  # Rende la nuova lista dopo la selezione
+                self.render_folders()  # Renders new list after selection
 
-        # Gestione della freccia giù
+        # Down arrow handling
         @kb.add('down')
         def down(event):
             if self.current_row < len(self.folders) - 1:
                 self.current_row += 1
-                self.render_folders()  # Rende la nuova lista dopo la selezione
+                self.render_folders()  # Renders new list after selection
 
-        # Gestione della selezione/deselezione
+        # Handling of selection/deselection
         @kb.add('enter')
         def select(event):
             self.selected[self.current_row] = not self.selected[self.current_row]
-            self.render_folders()  # Rende la nuova lista dopo la selezione
+            self.render_folders()  # Renders new list after selection
 
-        # Gestione della chiusura con 'q'
+        # Confirm and exit handling with 'q'
         @kb.add('q')
         def quit(event):
-            """Premendo 'q' esci e ritorna le cartelle selezionate."""
+            """By pressing 'q' exit and return the selected packages"""
             self.selected_folders = [self.folders[i] for i, sel in enumerate(self.selected) if sel]
-            raise KeyboardInterrupt  # Interrompe il loop per uscire
+            raise KeyboardInterrupt  # Interrupts the loop to exit
 
-        # Rende la lista iniziale
+        # Render initial list
         self.render_folders()
 
-        # Ciclo principale
+        # Main cycle
         try:
             while True:
-                prompt("", key_bindings=kb)  # Mostra il prompt e ascolta le scorciatoie da tastiera
+                prompt("", key_bindings=kb)  # Listen for new inputs
         except KeyboardInterrupt:
-            # Ritorna la lista delle cartelle selezionate
+            # Return the list of selected packages
             return self.selected_folders

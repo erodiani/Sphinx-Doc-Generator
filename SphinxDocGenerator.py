@@ -69,8 +69,8 @@ class SphinxDocGenerator():
             code_file_path = "..\\front_page.tex"  # Path to the file containing the code you want to add
             with open(code_file_path, "r") as code_file:
                 code_to_insert = code_file.read()  # Read the entire content of the file
-                code_to_insert = code_to_insert.replace("Titolo della Documentazione", project_name)
-                code_to_insert = code_to_insert.replace("Autore 1, Autore 2, Autore 3", authors)
+                code_to_insert = code_to_insert.replace("Documentation title", project_name)
+                code_to_insert = code_to_insert.replace("Author 1, Author 2", authors)
             self.add_code_after_begin_document(tex_file_path, code_to_insert)
             """
             # Change to the _build/latex directory
@@ -145,7 +145,7 @@ class SphinxDocGenerator():
         if any(package_name in line for line in existing_lines):
             print(f"Package {package_name} added to {modules_rst_path}.")
         else:
-            # Se non è presente, aggiungilo
+            # If package is not in the file, add it
             with open(modules_rst_path, 'a') as file:
                 file.write(f"   {package_name}\n")
             print(f"Package {package_name} added to {modules_rst_path}.")

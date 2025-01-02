@@ -9,7 +9,7 @@ class PackageSelector(ABC):
 
     def get_python_packages_from_folders(self):
         """
-        Scansiona le cartelle nella directory specificata per pacchetti Python (cartelle con __init__.py).
+        Scans the folders inside the specified directory to find the Python packages (folders with __init__.py)
         """
         python_packages = []
         if os.path.exists(self.path):

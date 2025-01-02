@@ -6,40 +6,40 @@ from PackageSelector import PackageSelector
 class PackageSelectorGUI(PackageSelector):
     def __init__(self, path):
         super().__init__(path=path)
-        self.selected_folders = []  # Lista delle cartelle selezionate
+        self.selected_folders = []  # List of selected packages
 
     def toggle_selection(self, folder):
         """
-        Alterna la selezione di una cartella. Se è già selezionata, la rimuove dalla lista, altrimenti la aggiunge.
+        Toggles a folder selection. If it is already selected, it removes it from the list, otherwise it adds it.
         """
         if folder in self.selected_folders:
-            self.selected_folders.remove(folder)  # Deseleziona
+            self.selected_folders.remove(folder)  # Deselect
         else:
-            self.selected_folders.append(folder)  # Seleziona
+            self.selected_folders.append(folder)  # Select
 
-        self.update_package_list(self.python_packages)  # Rende la lista aggiornata per riflettere lo stato
+        self.update_package_list(self.python_packages)  # Render the new list to reflect the state
 
     def update_package_list(self, packages):
         """
-        Aggiorna la lista dei pacchetti, mantenendo lo stato di selezione.
+        Updates the package list, maintaining the selection state.
         """
-        # Rimuove i widget esistenti
+        # Removes existing widgets
         for widget in self.package_frame.winfo_children():
             widget.destroy()
 
-        # Ricostruisce la lista con lo stato di selezione aggiornato
+        # Rebuild list with the newer state
         for package in packages:
             package_name = os.path.basename(package)
 
-            # Crea una riga per ogni pacchetto
+            # Create a line for every package
             row = tk.Frame(self.package_frame)
             row.pack(fill=tk.X, pady=2)
 
-            # Label per il nome del pacchetto
+            # Label with the name of the package
             label = tk.Label(row, text=package_name, width=40, anchor="w")
             label.pack(side=tk.LEFT, padx=5)
 
-            # Bottone per alternare la selezione
+            # Button to toggle selection
             button = tk.Button(row, text="+" if package not in self.selected_folders else "−", 
                                bg="lightgreen" if package not in self.selected_folders else "red")
             button.config(command=lambda p=package: self.toggle_selection(p))
@@ -47,7 +47,7 @@ class PackageSelectorGUI(PackageSelector):
 
     def filter_packages(self, event=None):
         """
-        Filtra i pacchetti in base al testo inserito nella barra di ricerca.
+        Filter packages based on the text entered in the search bar.
         """
         search_text = self.search_entry.get().lower()
         filtered = [pkg for pkg in self.python_packages if search_text in os.path.basename(pkg).lower()]
@@ -55,27 +55,27 @@ class PackageSelectorGUI(PackageSelector):
 
     def document(self):
         """
-        Quando si preme il pulsante "document", raccoglie i percorsi delle cartelle selezionate
-        e chiude la finestra.
+        When you press the "document" button, it collects the paths of the selected folders
+        and closes the window.
         """
-        if self.selected_folders:  # Se ci sono cartelle selezionate
-            self.root.quit()  # Chiude la finestra
+        if self.selected_folders:  # If there are selected packages
+            self.root.quit()  # Close the window
         else:
-            messagebox.showwarning("Selezione incompleta", "Devi selezionare almeno un package.")
+            messagebox.showwarning("Uncomplete selection", "You must select at least one package")
             return
 
-        return self.selected_folders  # Restituisce la lista di percorsi
+        return self.selected_folders  # Returns the list of packages selected
 
     def create_widgets(self):
         """
-        Crea i widget necessari per l'interfaccia grafica.
+        Create the necessary widgets for the graphical interface.
         """
         # Titolo
-        label = tk.Label(self.root, text="Seleziona i pacchetti Python da documentare:", font=("Arial", 12))
+        label = tk.Label(self.root, text="Select the Python packages for which you want to generate documentation:", font=("Arial", 12))
         label.pack(pady=10)
 
         # Etichetta per la barra di ricerca
-        search_label = tk.Label(self.root, text="Cerca pacchetti:", font=("Arial", 10))
+        search_label = tk.Label(self.root, text="Seach packages:", font=("Arial", 10))
         search_label.pack(pady=5)
 
         # Barra di ricerca
@@ -96,19 +96,19 @@ class PackageSelectorGUI(PackageSelector):
 
     def run(self) -> list[str]:
         """
-        Avvia l'interfaccia grafica e il loop di eventi Tkinter.
+        Launch the Tkinter GUI and event loop.
         """
         self.root = tk.Tk()
-        self.root.title("Seleziona i pacchetti Python da documentare")
+        self.root.title("Select the Python packages for which you want to generate documentation")
 
-        # Ottiene i pacchetti Python dalla directory di base
+        # Gets Python packages from the base directory
         self.python_packages = self.get_python_packages_from_folders()
 
-        # Crea i widget dell'interfaccia grafica
+        # Create GUI widgets
         self.create_widgets()
 
-        # Avvia il loop degli eventi Tkinter
+        # Start the Tkinter event loop
         self.root.mainloop()
 
-        # Dopo la chiusura della finestra, ritorna i percorsi selezionati
+        # After closing the window, it returns the selected paths
         return self.selected_folders
