@@ -75,7 +75,7 @@ class PackageSelectorGUI(PackageSelector):
         label.pack(pady=10)
 
         # Etichetta per la barra di ricerca
-        search_label = tk.Label(self.root, text="Seach packages:", font=("Arial", 10))
+        search_label = tk.Label(self.root, text="Search packages:", font=("Arial", 10))
         search_label.pack(pady=5)
 
         # Barra di ricerca
